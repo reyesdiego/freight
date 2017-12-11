@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>Agregar Nuevo Usuario</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form (ngSubmit)="saveBook()" #userForm="ngForm">
+        <div class="form-group">
+          <label for="lastname">Apellido</label>
+          <input type="text" class="form-control" [(ngModel)]="user.lastname" name="lastname" required>
+        </div>
+        <div class="form-group">
+          <label for="firstname">Nombre</label>
+          <input type="text" class="form-control" [(ngModel)]="user.firstname" name="firstname" required>
+        </div>
+        <div class="form-group">
+          <label for="_id">DNI</label>
+          <input type="text" class="form-control" [(ngModel)]="user._id" name="_id" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Aceptar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
