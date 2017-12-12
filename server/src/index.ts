@@ -10,10 +10,8 @@ App.set("port", port);
 
 const server = http.createServer(App);
 server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
 
-function onError(error: NodeJS.ErrnoException): void {
+server.on("error", (error: NodeJS.ErrnoException): void => {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -30,10 +28,10 @@ function onError(error: NodeJS.ErrnoException): void {
     default:
       throw error;
   }
-}
+});
 
-function onListening(): void {
+server.on("listening", (): void => {
   const addr = server.address();
   const bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
-}
+});
