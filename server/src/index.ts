@@ -3,11 +3,11 @@ import * as http from "http";
 import * as mongoose from "mongoose";
 
 
-mongoose.connect("mongodb://localhost:27017/mean-angular5");
-
-
 import App from "./include/app";
 import Client from "./routes/clients";
+
+mongoose.connect("mongodb://localhost:27017/mean-angular5", { useMongoClient: true });
+(<any>mongoose).Promise = global.Promise;
 
 debug("ts-express:server");
 

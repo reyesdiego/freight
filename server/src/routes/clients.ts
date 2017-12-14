@@ -6,9 +6,18 @@ class Client {
 
     constructor() {
         this.router = express.Router();
+
         this.router.get("/", (req, res) => {
             user.find()
-            .exec()
+            .then( data => {
+                    res.status(200).send({
+                        data: data,
+                        status: "OK"
+                      });
+            });
+        });
+        this.router.post("/add", (req: express.Request, res: express.Response) => {
+            user.create(req.body)
             .then( data => {
                     res.status(200).send({
                         data: data,
