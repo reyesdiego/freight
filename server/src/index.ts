@@ -1,14 +1,21 @@
 import * as debug from "debug";
 import * as http from "http";
+import * as mongoose from "mongoose";
+
+
+mongoose.connect("mongodb://localhost:27017/mean-angular5");
+
 
 import App from "./include/app";
+import Client from "./routes/clients";
 
 debug("ts-express:server");
 
 const port = process.env.PORT || 3000;
-App.set("port", port);
+App.express.set("port", port);
+App.setRoute("/clients", Client);
 
-const server = http.createServer(App);
+const server = http.createServer(App.express);
 server.listen(port);
 
 server.on("error", (error: NodeJS.ErrnoException): void => {

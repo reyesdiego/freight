@@ -8,16 +8,33 @@ class App {
   public express: express.Application;
 
   constructor() {
+
     this.express = express();
     this.middleware();
     this.routes();
-    this.clientRoutes();
+
   }
 
   private middleware(): void {
     this.express.use(logger("dev"));
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.all("/*", (req: express.Request, res: express.Response, next) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, token");
+      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+      // res.header('Access-Control-Request-Method', 'GET');
+      res.header("Access-Control-Request-Headers", "Content-Type, token");
+      res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
+      res.header("Expires", "-1");
+      res.header("Pragma", "no-cache");
+
+      if ("OPTIONS" === req.method) {
+          res.status(200).send();
+      } else {
+          next();
+      }
+    });
   }
 
   private routes(): void {
@@ -30,29 +47,11 @@ class App {
       });
     });
     this.express.use("/", router);
-
   }
 
-  private clientRoutes(): void {
-
-    const router = express.Router();
-
-    router.get("/", (req: express.Request, res: express.Response) => {
-      res.status(200).send({
-        data: [{ _id: 1, client: "Maerks" }],
-        status: "OK"
-      });
-    });
-
-    router.get("/:_id", (req: express.Request, res: express.Response) => {
-      res.status(200).send({
-        data: { _id: parseInt(req.params._id, 10), client: `Cliente Nro ${req.params._id}` },
-        status: "OK"
-      });
-    });
-
-    this.express.use("/clients", router);
+  public setRoute(prefix: string, router: express.Router) {
+    this.express.use(prefix, router);
   }
 }
 
-export default new App().express;
+export default new App();
