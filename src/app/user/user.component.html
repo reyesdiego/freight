@@ -6,13 +6,15 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Cliente</th>
+        <th>Apellido</th>
+        <th>Nombre</th>
         <th>ID</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
         <td>{{ user.lastname }}</td>
+        <td>{{ user.firstname }}</td>
         <td>{{ user._id }}</td>
       </tr>
     </tbody>

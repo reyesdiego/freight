@@ -28,6 +28,8 @@ export class UserCreateComponent implements OnInit {
         }
       );
   }
-
+  volver() {
+    console.log("hola")
+  }
 }
 

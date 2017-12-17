@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css'],
+  selector: "app-user-detail",
+  templateUrl: "./user-detail.component.html",
+  styleUrls: ["./user-detail.component.css"],
   encapsulation: ViewEncapsulation.None
 })
 export class UserDetailComponent implements OnInit {
@@ -15,12 +15,13 @@ export class UserDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
-    this.getUserDetail(this.route.snapshot.params['id']);
+    this.getUserDetail(this.route.snapshot.params["id"]);
   }
 
   getUserDetail(id) {
-    this.http.get('/user/' + id).subscribe(data => {
-      this.user = data;
+    this.http.get("http://localhost:3000/clients/" + id).subscribe((data: any) => {
+
+      this.user = data.data;
     });
   }
 }

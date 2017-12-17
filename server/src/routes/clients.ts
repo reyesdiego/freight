@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as user from "../models/users";
+import { Result } from "../interfaces/result";
 
 class Client {
     public router: express.Router;
@@ -16,13 +17,25 @@ class Client {
                       });
             });
         });
-        this.router.post("/add", (req: express.Request, res: express.Response) => {
-            user.create(req.body)
+        this.router.get("/:_id", (req, res) => {
+            const id = req.params._id;
+            user.findOne({_id: id})
             .then( data => {
                     res.status(200).send({
                         data: data,
                         status: "OK"
                       });
+            });
+        });
+
+        this.router.post("/add", (req: express.Request, res: express.Response) => {
+            user.create(req.body)
+            .then( (data) => {
+                const result: Result = {
+                    data: data,
+                    status: "OK"
+                };
+                res.status(200).send(result);
             });
         });
     }
