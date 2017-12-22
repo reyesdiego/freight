@@ -8,7 +8,7 @@ class Client {
     constructor() {
         this.router = express.Router();
 
-        this.router.get("/", (req, res) => {
+        this.router.get("/", (req: express.Request, res: express.Response) => {
             user.find()
             .then( data => {
                     res.status(200).send({
@@ -17,7 +17,8 @@ class Client {
                       });
             });
         });
-        this.router.get("/:_id", (req, res) => {
+
+        this.router.get("/:_id", (req: express.Request, res: express.Response) => {
             const id = req.params._id;
             user.findOne({_id: id})
             .then( data => {
