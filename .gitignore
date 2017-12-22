@@ -2,7 +2,6 @@
 
 # compiled output
 /server/release
-/server/node_modules
 
 # dependencies
 /node_modules
